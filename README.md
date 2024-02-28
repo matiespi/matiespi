@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&text=Hello%20World!&height=100&section=header&fontColor=d6ace6)
+![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&text=Welcome!&height=100&section=header&fontColor=auto)
 ### Let's connect and have a chat! 🌟
 - 📫 How to reach me: [LinkedIn](https://www.linkedin.com/in/matias-eze-espinoza/)
 ### A litle bit about me:
