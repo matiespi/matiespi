@@ -10,7 +10,8 @@ pipeline {
                 sh "curl -o /tmp/apache_logs https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/apache_logs/apache_logs"
 
                  // Buscar la palabra clave en el archivo
-                sh "grep -c '${param.PALABRA_CLAVE}.*${param.RESPONSE}\|${param.RESPONSE}.*${param.PALABRA_CLAVE}' /tmp/apache_logs"
+                sh "grep -c '${params.PALABRA_CLAVE}.*${params.RESPONSE}\\|${params.RESPONSE}.*${params.PALABRA_CLAVE}' /tmp/apache_logs"
+
             }
         }
     }
