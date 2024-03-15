@@ -1,7 +1,7 @@
 pipeline {
     agent any
      parameters {
-        string(name: 'palabra_clave', defaultValue: '', description: 'Ingresa el error a buscar')
+        string(name: 'palabra_clave', defaultValue: 'logstash', description: 'Ingresa el error a buscar')
     }
     stages {
         stage('Download') {
