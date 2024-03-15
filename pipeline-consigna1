@@ -1,11 +1,14 @@
 pipeline {
     agent any
+     parameters {
+        string(name: 'palabra_clave', defaultValue: '', description: 'Ingresa el error a buscar')
+    }
     stages {
         stage('Download') {
             steps {
                 cd /tmp/
                 curl https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/apache_logs/apache_logs
-                grep -c logstash apache_logs
+                grep -c palabra_clave apache_logs
             }
         }
     }
