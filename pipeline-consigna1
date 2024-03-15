@@ -1,7 +1,8 @@
 pipeline {
     agent any
      parameters {
-        string(name: 'palabra_clave', defaultValue: 'logstash', description: 'Ingresa el error a buscar')
+        string(name: 'PALABRA_CLAVE', defaultValue: 'logstash', description: 'Ingresa el error a buscar')
+        string(name: 'RESPONSE', defaultValue: '200', description: 'Ingrese el response code a buscar')
     }
     stages {
         stage('Download') {
@@ -9,7 +10,7 @@ pipeline {
                 sh "curl -o /tmp/apache_logs https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/apache_logs/apache_logs"
 
                  // Buscar la palabra clave en el archivo
-                sh "grep -c '$params.palabra_clave' /tmp/apache_logs"
+                sh "grep -c 'param.PALABRA_CLAVE.*param.RESPONSE\|param.RESPONSE.*param.PALABRA_CLAVE' /tmp/apache_logs"
             }
         }
     }
