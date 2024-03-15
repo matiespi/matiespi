@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+    stages {
+        stage('Download') {
+            steps {
+                cd /tmp/
+                curl https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/apache_logs/apache_logs
+                grep -c github apache_logs
+            }
+        }
+    }
+}
