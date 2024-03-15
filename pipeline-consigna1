@@ -6,9 +6,8 @@ pipeline {
     stages {
         stage('Download') {
             steps {
-                cd /tmp/
-                curl https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/apache_logs/apache_logs
-                grep -c palabra_clave apache_logs
+                sh "curl -o /tmp/ https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/apache_logs/apache_logs)"
+                grep -c palabra_clave /tmp/apache_logs
             }
         }
     }
