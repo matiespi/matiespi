@@ -12,15 +12,15 @@ pipeline {
             steps {
                 script{
                     sh '''
-                        sudo groupadd $params.DEPARTAMENTO
+                        groupadd $params.DEPARTAMENTO
 
                         def temporalPassword = sh(script: 'openssl rand -base64 12', returnStdout: true).trim()
 
-                        sudo useradd -m -c "${params.NOMBRE_APELLIDO}, ${params.DEPARTAMENTO} " ${params.CODIGO}
+                        useradd -m -c "${params.NOMBRE_APELLIDO}, ${params.DEPARTAMENTO} " ${params.CODIGO}
 
                         echo "${params.CODIGO}:${temporalPassword}" | sudo chpasswd
 
-                        sudo usermod -aG ${params.DEPARTAMENTO} ${params.CODIGO}
+                        usermod -aG ${params.DEPARTAMENTO} ${params.CODIGO}
 
                     '''
                     emailext (
