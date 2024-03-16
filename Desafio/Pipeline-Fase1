@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+     parameters {
+            string(name: 'CODIGO', defaultValue: '', description: 'Ingrese codigo de usuario: (Formato - ejemplo: juanperez - jperez)')
+            string(name: 'NOMBRE_APELLIDO', defaultValue: '', description: 'Ingrese nombre y apellido')
+            string(name: 'MAIL', defaultValue: '', description: 'Ingrese mail para enviar info')
+            choice(name: 'DEPARTAMENTO', choices: ['Contabilidad', 'Finanzas', 'Tecnologia'], description: 'Asigne un departamento')
+    }
+    stages {
+        stage('Build') 
+        {
+            steps {
+                script{
+                    sh '''
+                        sudo groupadd $params.DEPARTAMENTO
+
+                        def temporalPassword = sh(script: 'openssl rand -base64 12', returnStdout: true).trim()
+
+                        sudo useradd -m -c "${params.NOMBRE_APELLIDO}, ${params.DEPARTAMENTO} " ${params.CODIGO}
+
+                        echo "${params.CODIGO}:${temporalPassword}" | sudo chpasswd
+
+                        sudo usermod -aG ${params.DEPARTAMENTO} ${params.CODIGO}
+
+                    '''
+                    emailext (
+                            to: '${params.MAIL}',
+                            subject: 'Contraseña Temporal - ${params.NOMBRE_APELLIDO}',
+                            body: "Usuario: ${params.CODIGO} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
+                            mimeType: 'text/plain'
+                        )
+                    
+                    echo "Contraseña temporal generada y enviada correctamente."
+                }
+            }
+        }
+    }
+}
