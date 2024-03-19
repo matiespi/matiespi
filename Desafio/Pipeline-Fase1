@@ -11,27 +11,16 @@ pipeline {
         {
             steps {
                 script{
-                    sh '''
-                        groupadd $params.DEPARTAMENTO
-
-                        def temporalPassword = sh(script: 'openssl rand -base64 12', returnStdout: true).trim()
-
-                        useradd -m -c "${params.NOMBRE_APELLIDO}, ${params.DEPARTAMENTO} " ${params.CODIGO}
-
-                        echo "${params.CODIGO}:${temporalPassword}" | sudo chpasswd
-
-                        usermod -aG ${params.DEPARTAMENTO} ${params.CODIGO}
-
-                    '''
-                    emailext (
-                            to: '${params.MAIL}',
-                            subject: 'Contraseña Temporal - ${params.NOMBRE_APELLIDO}',
-                            body: "Usuario: ${params.CODIGO} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
-                            mimeType: 'text/plain'
-                        )
-                    
-                    echo "Contraseña temporal generada y enviada correctamente."
+                    sh'./script.sh $CODIGO $NOMBRE_APELLIDO $DEPARTAMENTO'
                 }
+                /*emailext (
+                        to: '${params.MAIL}',
+                        subject: 'Contraseña Temporal - ${params.NOMBRE_APELLIDO}',
+                        body: "Usuario: ${params.CODIGO} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
+                        mimeType: 'text/plain'
+                    )
+                     echo "Contraseña temporal generada y enviada correctamente."
+                }*/
             }
         }
     }
