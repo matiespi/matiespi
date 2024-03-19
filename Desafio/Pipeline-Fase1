@@ -16,7 +16,7 @@ pipeline {
                         curl -O https://raw.githubusercontent.com/matiespi/matiespi/main/Desafio/script.sh
                         chmod +x script.sh
                         ls -l script.sh
-                        ./script.sh $CODIGO $NOMBRE_APELLIDO $DEPARTAMENTO
+                        ./script.sh "$CODIGO" "$NOMBRE_APELLIDO" "$DEPARTAMENTO"
                     '''
                 }
                 /*emailext (
