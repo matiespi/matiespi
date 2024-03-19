@@ -15,7 +15,7 @@ pipeline {
                         cd /tmp/
                         curl -o script.sh https://github.com/matiespi/matiespi/blob/main/Desafio/script.sh
                         chmod +x script.sh
-                        ls -l script.sh // Verifica si el archivo está presente y tiene los permisos necesarios
+                        ls -l script.sh
                         ./script.sh $CODIGO $NOMBRE_APELLIDO $DEPARTAMENTO
                     '''
                 }
