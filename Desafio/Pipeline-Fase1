@@ -11,7 +11,8 @@ pipeline {
         {
             steps {
                 script{
-                    sh'./script.sh $CODIGO $NOMBRE_APELLIDO $DEPARTAMENTO'
+                    sh "curl -o /tmp/script.sh https://github.com/matiespi/matiespi/blob/main/Desafio/script.sh"
+                    sh'/tmp/script.sh $CODIGO $NOMBRE_APELLIDO $DEPARTAMENTO'
                 }
                 /*emailext (
                         to: '${params.MAIL}',
