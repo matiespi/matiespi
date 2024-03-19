@@ -11,9 +11,13 @@ pipeline {
         {
             steps {
                 script{
-                    sh 'curl -o /tmp/script.sh https://github.com/matiespi/matiespi/blob/main/Desafio/script.sh'
-                    sh'chmod +x /tmp/script.sh'
-                    sh'./tmp/script.sh $CODIGO $NOMBRE_APELLIDO $DEPARTAMENTO'
+                    sh'''
+                        cd /tmp/
+                        curl -o script.sh https://github.com/matiespi/matiespi/blob/main/Desafio/script.sh
+                        chmod +x script.sh
+                        ls -l script.sh // Verifica si el archivo está presente y tiene los permisos necesarios
+                        ./script.sh $CODIGO $NOMBRE_APELLIDO $DEPARTAMENTO
+                    '''
                 }
                 /*emailext (
                         to: '${params.MAIL}',
