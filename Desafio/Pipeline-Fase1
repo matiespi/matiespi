@@ -12,7 +12,6 @@ pipeline {
             steps {
                 script{
                     sh'''
-                        git clone 
                         cd /tmp/
                         curl -O https://raw.githubusercontent.com/matiespi/matiespi/main/Desafio/script.sh
                         chmod +x script.sh
