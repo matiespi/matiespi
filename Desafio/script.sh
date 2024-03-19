@@ -12,4 +12,4 @@ useradd -m -c "$nom_ape, $departamento" $cod
 
 echo "$cod:$temporalPassword" | sudo chpasswd
 
-usermod -aG $departamento $cod
+usermod -aG $departamento $cod 
