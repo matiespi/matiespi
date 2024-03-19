@@ -10,7 +10,7 @@ temporalPassword=$(openssl rand -base64 12 | tr -d '\n')
 
 echo "${temporalPassword}"
 
-sudo useradd -m -c "$´{nom_ape}, ${departamento}" "${cod}"
+sudo useradd -m -c "${nom_ape}, ${departamento}" "${cod}"
 
 sudo echo "${cod}:${temporalPassword}" | sudo chpasswd
 
