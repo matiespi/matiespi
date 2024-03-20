@@ -6,7 +6,7 @@ pipeline {
             choice(name: 'DEPARTAMENTO', choices: ['Contabilidad', 'Finanzas', 'Tecnologia'], description: 'Asigne un departamento')
     }
     stages {
-        stage('Build') 
+        stage('Download-File') 
         {
             steps {
                 script{
@@ -15,18 +15,28 @@ pipeline {
                         curl -O https://raw.githubusercontent.com/matiespi/matiespi/main/Desafio/script.sh
                         chmod +x script.sh
                         ls -l script.sh
-                        ./script.sh "$NOMBRE_APELLIDO" "$DEPARTAMENTO"
                     '''
                 }
-                /*emailext (
-                        to: '${params.MAIL}',
-                        subject: 'Contraseña Temporal - ${params.NOMBRE_APELLIDO}',
-                        body: "Usuario: ${params.CODIGO} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
+            }
+        stage('Execution') 
+        {
+            steps {
+                script{
+                    sh'cd /tmp/'
+                    def temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
+                    resultado=$(./script.sh "$NOMBRE_APELLIDO" "$DEPARTAMENTO" "$temporalPassword")
+                }
+            }
+        stage('Send-Notification') 
+        {
+           emailext (
+                        to: '${MAIL}',
+                        subject: 'Contraseña Temporal - ${NOMBRE_APELLIDO}',
+                        body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
                         mimeType: 'text/plain'
                     )
                      echo "Contraseña temporal generada y enviada correctamente."
-                }*/
-            }
+                }
         }
     }
 }
