@@ -5,6 +5,10 @@ pipeline {
         string(name: 'MAIL', defaultValue: '', description: 'Ingrese mail para enviar info')
         choice(name: 'DEPARTAMENTO', choices: ['Contabilidad', 'Finanzas', 'Tecnologia'], description: 'Asigne un departamento')
     }
+    environment {
+        temporalPassword = '' // Definimos una variable de entorno vacía
+        resultado = ''
+    }
     stages {
         stage('Download-File') {
             steps {
@@ -21,9 +25,9 @@ pipeline {
         stage('Execution') {
             steps {
                 script {
-                    def temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
+                    temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
                     echo "${temporalPassword}"
-                    def resultado = sh(script: "/tmp/script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
+                    resultado = sh(script: "/tmp/script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
                 
                 /*emailext (
                         to: "${MAIL}",
@@ -39,7 +43,7 @@ pipeline {
     post {
         always{
             emailext (
-                    body: "Usuario: - Tu contraseña temporal es:  . Deberás cambiarla en tu primer inicio de sesión.",
+                    body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
                     to: "$MAIL",
                     subject: 'Usuario creado correctamente - $NOMBRE_APELLIDO',
                 )
