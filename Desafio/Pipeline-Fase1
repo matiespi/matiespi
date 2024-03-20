@@ -45,8 +45,6 @@ pipeline {
                     subject: '${JOB_NAME} - Usuario creado correctamente - ${NOMBRE_APELLIDO}',
                     body: """
 
-                        La build ${JOB_NAME} ha finalizado con el estado ${BUILD_STATUS}.
-
                         Usuario: ${resultado}
                         Tu contraseña temporal es: ${temporalPassword}. 
                         
