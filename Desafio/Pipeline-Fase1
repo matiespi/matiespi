@@ -27,9 +27,11 @@ pipeline {
                     
                     emailext (
                         to: "${MAIL}",
-                        subject: "Usuario creado correctamente - ${NOMBRE_APELLIDO}",
+                        subject: "${BUILD_NUMBER} - Creacion de usuario correcta - ${NOMBRE_APELLIDO}",
                         body: """
-
+                            Proceso finalizo con exito...
+                            
+                            Datos de ingreso:
                             Usuario: ${resultado}
                             Tu contraseña temporal es: ${temporalPassword}. 
                             
