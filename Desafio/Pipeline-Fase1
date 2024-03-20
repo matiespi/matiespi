@@ -25,13 +25,13 @@ pipeline {
                     echo "${temporalPassword}"
                     def resultado = sh(script: "/tmp/script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
                 
-                emailext (
+                /*emailext (
                         to: "${MAIL}",
                         subject: "Usuario creado correctamente - ${NOMBRE_APELLIDO}",
                         body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
                         mimeType: 'text/plain'
                     )
-                    echo "Contraseña temporal generada y enviada correctamente."
+                    echo "Contraseña temporal generada y enviada correctamente."*/
                 }
             }
         }
