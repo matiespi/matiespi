@@ -8,7 +8,7 @@ var_guion="${var_minus// /_}"
 
 sudo groupadd ${departamento}
 
-temporalPassword=$(openssl rand -base64 12 | tr -d '\n')
+temporalPassword="1234"
 
 echo "${temporalPassword}"
 
