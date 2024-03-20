@@ -42,8 +42,8 @@ pipeline {
     }
     post {
         always{
+            to: "${MAIL}",
             emailext body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
-            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Usuario creado correctamente - ${NOMBRE_APELLIDO}"
         }
     }
