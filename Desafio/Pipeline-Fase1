@@ -24,7 +24,7 @@ pipeline {
                 script{
                     sh'cd /tmp/'
                     def temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
-                    resultado=$(./script.sh "$NOMBRE_APELLIDO" "$DEPARTAMENTO" "$temporalPassword")
+                    def resultado=$(./script.sh "$NOMBRE_APELLIDO" "$DEPARTAMENTO" "$temporalPassword")
                 }
             }
         stage('Send-Notification') 
