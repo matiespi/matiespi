@@ -1,7 +1,6 @@
 pipeline {
     agent any
      parameters {
-            string(name: 'CODIGO', defaultValue: '', description: 'Ingrese codigo de usuario: (Formato - ejemplo: juanperez - jperez)')
             string(name: 'NOMBRE_APELLIDO', defaultValue: '', description: 'Ingrese nombre y apellido')
             string(name: 'MAIL', defaultValue: '', description: 'Ingrese mail para enviar info')
             choice(name: 'DEPARTAMENTO', choices: ['Contabilidad', 'Finanzas', 'Tecnologia'], description: 'Asigne un departamento')
@@ -16,7 +15,7 @@ pipeline {
                         curl -O https://raw.githubusercontent.com/matiespi/matiespi/main/Desafio/script.sh
                         chmod +x script.sh
                         ls -l script.sh
-                        ./script.sh "$CODIGO" "$NOMBRE_APELLIDO" "$DEPARTAMENTO"
+                        ./script.sh "$NOMBRE_APELLIDO" "$DEPARTAMENTO"
                     '''
                 }
                 /*emailext (

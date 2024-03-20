@@ -1,8 +1,10 @@
 #!/bin/bash
 
-cod=$1
-nom_ape=$2
-departamento=$3
+nom_ape=$1
+departamento=$2
+
+var_minus="${nom_ape,,}"
+var_guion="${var_minus// /_}"
 
 sudo groupadd ${departamento}
 
@@ -10,8 +12,8 @@ temporalPassword=$(openssl rand -base64 12 | tr -d '\n')
 
 echo "${temporalPassword}"
 
-sudo useradd -m -c "${nom_ape}, ${departamento}" "${cod}"
+sudo useradd -m -c "${nom_ape}, ${departamento}" "${var_guion}"
 
-sudo echo "${cod}:${temporalPassword}" | sudo chpasswd
+sudo echo "${var_guion}:${temporalPassword}" | sudo chpasswd
 
-sudo usermod -aG ${departamento} ${cod} 
+sudo usermod -aG ${departamento} ${var_guion} 
