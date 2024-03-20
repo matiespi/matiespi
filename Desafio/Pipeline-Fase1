@@ -35,7 +35,7 @@ pipeline {
                     emailext (
                         to: "${MAIL}",
                         subject: "Contraseña Temporal - ${NOMBRE_APELLIDO}",
-                        body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
+                        body: "Usuario: ${usuarioCreado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
                         mimeType: 'text/plain'
                     )
                     echo "Contraseña temporal generada y enviada correctamente."
