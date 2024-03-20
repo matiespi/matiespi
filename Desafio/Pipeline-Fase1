@@ -25,9 +25,10 @@ pipeline {
                 script{
                     sh'''
                         cd /tmp/
-                        temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
+                        temporalPassword = $(openssl rand -base64 12 | tr -d '\n')
                         echo "${temporalPassword}"
-                        resultado = sh(script: './script.sh "$NOMBRE_APELLIDO" "$DEPARTAMENTO" "$temporalPassword"')
+                        resultado = sh(script: "./script.sh \"$NOMBRE_APELLIDO\" \"$DEPARTAMENTO\" \"$temporalPassword\"")
+
                         echo "${resultado}"
                     '''
                 }
