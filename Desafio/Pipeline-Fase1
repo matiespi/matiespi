@@ -24,15 +24,15 @@ pipeline {
                     temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
                     echo "${temporalPassword}"
                     resultado = sh(script: "/tmp/script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
-                    
+                    def user= resultado
                     emailext (
                         to: "${MAIL}",
-                        subject: "${BUILD_NUMBER} - Creacion de usuario correcta - ${NOMBRE_APELLIDO}",
+                        subject: "Job N°${BUILD_NUMBER} - Creacion de usuario correcta - ${NOMBRE_APELLIDO}",
                         body: """
                             Proceso finalizo con exito...
                             
                             Datos de ingreso:
-                            Usuario: ${resultado}
+                            Usuario: ${user}
                             Tu contraseña temporal es: ${temporalPassword}. 
                             
                             Deberás cambiarla en tu primer inicio de sesión.
