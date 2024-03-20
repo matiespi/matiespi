@@ -24,10 +24,10 @@ pipeline {
                     temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
                     echo "${temporalPassword}"
                     resultado = sh(script: "/tmp/script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
-                    def user= resultado
                     emailext (
                         to: "${MAIL}",
                         subject: "Job N°${BUILD_NUMBER} - Creacion de usuario correcta - ${NOMBRE_APELLIDO}",
+                        def user= resultado
                         body: """
                             Proceso finalizo con exito...
                             
