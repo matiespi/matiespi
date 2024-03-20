@@ -41,7 +41,6 @@ pipeline {
                         body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
                         to: "$MAIL",
                         subject: 'Usuario creado correctamente - $NOMBRE_APELLIDO',
-                        mimeType: 'text/plain'
                     )
             }
         }
