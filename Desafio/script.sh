@@ -6,8 +6,8 @@ temporalPassword=$3
 
 var_minus="${nom_ape,,}"
 var_guion="${var_minus// /_}"
+
 echo "${var_guion}" 
-echo "${temporalPassword}"
 
 sudo groupadd ${departamento}
 
@@ -16,4 +16,6 @@ sudo useradd -m -c "${nom_ape}, ${departamento}" -p $(openssl passwd -1 "$tempor
 echo "${var_guion}:${temporalPassword}" | sudo chpasswd
 
 sudo usermod -aG ${departamento} ${var_guion} 
+
+echo "${var_guion}" 
 
