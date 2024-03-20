@@ -24,7 +24,7 @@ pipeline {
                     def temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
                     echo "${temporalPassword}"
                     def resultado = sh(script: "/tmp/script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
-                }
+                
                 emailext (
                         to: "${MAIL}",
                         subject: "Usuario creado correctamente - ${NOMBRE_APELLIDO}",
@@ -32,6 +32,7 @@ pipeline {
                         mimeType: 'text/plain'
                     )
                     echo "Contraseña temporal generada y enviada correctamente."
+                }
             }
         }
     }
