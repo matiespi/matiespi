@@ -1,15 +1,14 @@
 pipeline {
     agent any
-     parameters {
-            string(name: 'NOMBRE_APELLIDO', defaultValue: '', description: 'Ingrese nombre y apellido')
-            string(name: 'MAIL', defaultValue: '', description: 'Ingrese mail para enviar info')
-            choice(name: 'DEPARTAMENTO', choices: ['Contabilidad', 'Finanzas', 'Tecnologia'], description: 'Asigne un departamento')
+    parameters {
+        string(name: 'NOMBRE_APELLIDO', defaultValue: '', description: 'Ingrese nombre y apellido')
+        string(name: 'MAIL', defaultValue: '', description: 'Ingrese mail para enviar info')
+        choice(name: 'DEPARTAMENTO', choices: ['Contabilidad', 'Finanzas', 'Tecnologia'], description: 'Asigne un departamento')
     }
     stages {
-        stage('Download-File') 
-        {
+        stage('Download-File') {
             steps {
-                script{
+                script {
                     sh'''
                         cd /tmp/
                         curl -O https://raw.githubusercontent.com/matiespi/matiespi/main/Desafio/script.sh
@@ -19,35 +18,29 @@ pipeline {
                 }
             }
         }
-        stage('Execution') 
-        {
+        stage('Execution') {
             steps {
-                script{
-                    sh'''
-                        cd /tmp/
-                        def temporalPassword = $(openssl rand -base64 12 | tr -d '\n')
-                        echo "${temporalPassword}"
-                        def resultado = sh(script: "./script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"")
+                script {
+                    def temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
+                    echo "${temporalPassword}"
+                    def resultado = sh(script: "./script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
 
-                        echo "${resultado}"
-                    '''
+                    echo "${resultado}"
                 }
             }
         }
-        stage('Send-Notification') 
-        {
+        stage('Send-Notification') {
             steps {
-                script{
+                script {
                     emailext (
-                        to: '${MAIL}',
-                        subject: 'Contraseña Temporal - ${NOMBRE_APELLIDO}',
+                        to: "${MAIL}",
+                        subject: "Contraseña Temporal - ${NOMBRE_APELLIDO}",
                         body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
                         mimeType: 'text/plain'
                     )
-                        echo "Contraseña temporal generada y enviada correctamente."
+                    echo "Contraseña temporal generada y enviada correctamente."
                 }
             }
         }
-        
     }
 }
