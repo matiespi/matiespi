@@ -12,7 +12,7 @@ temporalPassword=$(openssl rand -base64 12 | tr -d '\n')
 
 echo "${temporalPassword}"
 
-sudo useradd -m -c "${nom_ape}, ${departamento}" "${var_guion}"
+sudo useradd -m -c "${nom_ape}, ${departamento}" -p $(openssl passwd -1 "$temporalPassword") -e $(date -d "+1 day" +"%Y-%m-%d") "${var_guion}"
 
 sudo echo "${var_guion}:${temporalPassword}" | sudo chpasswd
 
