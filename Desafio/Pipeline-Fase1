@@ -41,7 +41,7 @@ pipeline {
         }
     }
     post {
-        success{
+        always{
             emailext (
                     body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
                     to: "$MAIL",
