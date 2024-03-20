@@ -39,13 +39,27 @@ pipeline {
                 }
             }
         }
-    }
-    post {
-        always{
-            
-            emailext body: "Usuario: ${resultado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
-            to: "${MAIL}",
-            subject: "Usuario creado correctamente - ${NOMBRE_APELLIDO}"
+        stage('Enviar correo electrónico') {
+            steps {
+                emailext (
+                    subject: '${JOB_NAME} - Usuario creado correctamente - ${NOMBRE_APELLIDO}',
+                    body: """
+
+                        La build ${JOB_NAME} ha finalizado con el estado ${BUILD_STATUS}.
+
+                        Usuario: ${resultado}
+                        Tu contraseña temporal es: ${temporalPassword}. 
+                        
+                        Deberás cambiarla en tu primer inicio de sesión.
+
+                    """,
+                    recipientProviders: [
+                        [$class: 'CulpritsRecipientProvider'],
+                        [$class: 'DevelopersRecipientProvider'],
+                        [$class: 'FixedRecipientProvider', addresses: "${MAIL}"]
+                    ]
+                )
+            }
         }
     }
 }
