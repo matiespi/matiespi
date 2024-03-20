@@ -27,19 +27,13 @@ pipeline {
                     def usuarioCreado = resultado.split()[0] 
                     echo "Usuario creado: ${usuarioCreado}"
                 }
-            }
-        }
-        stage('Send-Notification') {
-            steps {
-                script {
-                    emailext (
+                emailext (
                         to: "${MAIL}",
                         subject: "Contraseña Temporal - ${NOMBRE_APELLIDO}",
                         body: "Usuario: ${usuarioCreado} - Tu contraseña temporal es: ${temporalPassword}. Deberás cambiarla en tu primer inicio de sesión.",
                         mimeType: 'text/plain'
                     )
                     echo "Contraseña temporal generada y enviada correctamente."
-                }
             }
         }
     }
