@@ -5,10 +5,6 @@ pipeline {
         string(name: 'MAIL', defaultValue: '', description: 'Ingrese mail para enviar info')
         choice(name: 'DEPARTAMENTO', choices: ['Contabilidad', 'Finanzas', 'Tecnologia'], description: 'Asigne un departamento')
     }
-    environment {
-        temporalPassword = '' // Definimos una variable de entorno vacía
-        resultado = ''
-    }
     stages {
         stage('Download-File') {
             steps {
