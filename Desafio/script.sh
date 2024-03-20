@@ -17,4 +17,4 @@ echo "${var_guion}:${temporalPassword}" | sudo chpasswd
 
 sudo usermod -aG ${departamento} ${var_guion} 
 
-return ${var_guion}
+echo "${var_guion}" 
