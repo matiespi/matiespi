@@ -24,7 +24,8 @@ pipeline {
                     def temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
                     echo "${temporalPassword}"
                     def resultado = sh(script: "/tmp/script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
-                    echo "${resultado}"
+                    def usuarioCreado = resultado.split()[0] 
+                    echo "Usuario creado: ${usuarioCreado}"
                 }
             }
         }
