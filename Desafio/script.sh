@@ -11,8 +11,6 @@ sudo groupadd ${departamento}
 
 sudo useradd -m -c "${nom_ape}, ${departamento}" "${var_guion}"
 
-echo "${var_guion}"
-
 echo "${var_guion}:${temporalPassword}" | sudo chpasswd
 
 sudo usermod -aG ${departamento} ${var_guion} 
