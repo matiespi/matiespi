@@ -6,20 +6,20 @@ departamento=$2
 temporalPassword=$3
 
 #Convierte texto a minuscula
-var_minus="${nom_ape,,}"
+user_minuscula="${nom_ape,,}"
 #Se separa palabra con _
-var_guion="${var_minus// /_}"
+user_create="${user_minuscula// /_}"
 
 sudo groupadd ${departamento}
 
-sudo useradd -m -c "${nom_ape}, ${departamento}" "${var_guion}"
+sudo useradd -m -c "${nom_ape}, ${departamento}" "${user_create}"
 
-echo "${var_guion}:${temporalPassword}" | sudo chpasswd
+echo "${user_create}:${temporalPassword}" | sudo chpasswd
 
 #Se estable vencimiento de clave temporal para en 30 dias
-sudo chage -d 30 $1
+sudo chage -d 30 $user_create
 
-sudo usermod -aG ${departamento} ${var_guion} 
+sudo usermod -aG ${departamento} ${user_create} 
 
-echo "${var_guion}"
+echo "${user_create}"
 
