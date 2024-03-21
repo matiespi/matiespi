@@ -38,7 +38,7 @@ pipeline {
                             
                         Datos de ingreso:
                         Usuario: ${resultado}
-                        Tu contraseña temporal es: ${temporalPassword}. (Vence en 30 dias)
+                        Tu contraseña temporal es: ${temporalPassword} (Vence en 30 dias)
                         
                         Deberás cambiarla en tu primer inicio de sesión.
 
