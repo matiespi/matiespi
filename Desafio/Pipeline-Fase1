@@ -24,7 +24,6 @@ pipeline {
 
                     // Se genera clave temporal y se guarda en variable
                     temporalPassword = sh(script: 'openssl rand -base64 12 | tr -d "\n"', returnStdout: true).trim()
-                    echo "${temporalPassword}"
 
                     // Se ejecuta script y se guarda usuario creado en variable
                     resultado = sh(script: "/tmp/script.sh \"${NOMBRE_APELLIDO}\" \"${DEPARTAMENTO}\" \"${temporalPassword}\"", returnStdout: true).trim()
@@ -35,13 +34,13 @@ pipeline {
                         to: "${MAIL}",
                         subject: "Job N°${BUILD_NUMBER} - Creacion de usuario correcta - ${NOMBRE_APELLIDO}",
                         body: """
-                            Proceso finalizo con exito...
+                        Proceso finalizo con exito...
                             
-                            Datos de ingreso:
-                            Usuario: ${resultado}
-                            Tu contraseña temporal es: ${temporalPassword}. (Vence en 30 dias)
-                            
-                            Deberás cambiarla en tu primer inicio de sesión.
+                        Datos de ingreso:
+                        Usuario: ${resultado}
+                        Tu contraseña temporal es: ${temporalPassword}. (Vence en 30 dias)
+                        
+                        Deberás cambiarla en tu primer inicio de sesión.
 
                         """,
                         mimeType: 'text/plain'
