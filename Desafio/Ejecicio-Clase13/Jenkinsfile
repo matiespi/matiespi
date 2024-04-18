@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    parameters {  // Se declaran parametros
+        string(name: 'PROCESO', defaultValue: 'bash', description: 'Ingrese nombr de proceso')
+    }
+    stages {
+        stage('Download-File') {
+            steps {
+                script {   // Descargar script en carpeta temporal y le da permisos de ejecucion
+                    sh'''
+                        cd /tmp/
+                        curl -O https://raw.githubusercontent.com/matiespi/matiespi/main/Desafio/Ejercicio-Clase13/script.sh
+                        chmod +x script.sh
+                    '''
+                }
+            }
+        }
+        stage('Execution') {
+            steps {
+                script {
+                    sh "/tmp/script.sh $PROCESO"            
+                }
+            }
+        }
+    }
+}
