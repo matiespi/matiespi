@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     sh 'chmod +x ./script.sh'
-                    sh ""./script.sh $PROCESO"        
+                    sh "./script.sh $PROCESO"        
                 }
             }
         }
