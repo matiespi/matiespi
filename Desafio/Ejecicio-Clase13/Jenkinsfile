@@ -7,8 +7,8 @@ pipeline {
         stage('Execution') {
             steps {
                 script {
-                    sh 'chmod +x ./script.sh'
-                    sh "./script.sh $PROCESO"        
+                    sh 'chmod +x ./Desafio/Ejecicio-Clase13/script.sh'
+                    sh "./Desafio/Ejecicio-Clase13/script.sh $PROCESO"        
                 }
             }
         }
