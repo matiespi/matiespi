@@ -7,7 +7,8 @@ pipeline {
         stage('Execution') {
             steps {
                 script {
-                    sh "./script.sh $PROCESO"            
+                    sh 'chmod +x ./script.sh'
+                    sh ""./script.sh $PROCESO"        
                 }
             }
         }
